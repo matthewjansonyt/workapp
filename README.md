@@ -17,7 +17,7 @@ Built with HTML, CSS, and JavaScript — no fancy dancy PHP here.
 Got tasks for the day? Add them to the code, or edit it to your liking!
   - Automatically resets every day at midnight
 
-- ⏰ **Sigma Analog Clock**
+- ⏰ **Analog Clock**
   - Stylish real-time clock
   - Pure CSS + JavaScript
   - Centerpiece of punctual power
