@@ -4,6 +4,8 @@ A single-page, offline-friendly, productivity app for getting your shifts in ord
 
 Built with HTML, CSS, and JavaScript — no fancy dancy PHP here.
 
+ALso, if you find any "sigma" references in here, it's a joke. Didn't mean for it to make it to prod.
+
 ---
 
 ## ✨ Features
