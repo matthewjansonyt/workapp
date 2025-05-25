@@ -1,0 +1,128 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>📠 WorkApp</h1> 
+
+<section>
+<center>
+<iframe src="clock.html"
+        width="325"
+        height="360"
+        style="border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"
+        title="Sigma Clock"
+        loading="lazy">
+</iframe>
+</center>
+</section>
+
+<section>
+  <h2>Work Schedule</h2>
+  <form id="schedule-form">
+    <input type="date" id="work-date" required>
+    <button type="submit">Save Shift</button>
+  </form>
+  <button type="button" id="reset-schedule-btn" style="background:#dc2626;color:white;">Reset Schedule</button>
+  <ul id="schedule-list"></ul>
+</section>
+
+
+  <section>
+    <h2>Morning Checklist</h2>
+    <ul>
+      <li><input type="checkbox" id="shower">Take Shower</li>
+      <li><input type="checkbox" id="teeth">Brush Teeth</li>
+      <li><input type="checkbox" id="dress">Get Dressed</li>
+<li><input type="checkbox"id="coffee">Make Coffee</li>
+<li><input type="checkbox" id="lunch">Pack Lunch</li>
+  </section>
+
+<footer>
+  <p>🧠 WorkApp &copy; 2025. A Scared Malinois Private Client Product.</p>
+</footer>
+
+  <script>
+    const form = document.getElementById('schedule-form');
+    const list = document.getElementById('schedule-list');
+    const resetBtn = document.getElementById('reset-schedule-btn');
+
+    function saveSchedule(schedule) {
+      localStorage.setItem('schedule', JSON.stringify(schedule));
+    }
+
+    function getSchedule() {
+      return JSON.parse(localStorage.getItem('schedule') || '[]');
+    }
+
+    function renderSchedule() {
+      const schedule = getSchedule();
+      list.innerHTML = '';
+      schedule.forEach(date => {
+        const li = document.createElement('li');
+        li.textContent = date;
+        list.appendChild(li);
+      });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const date = document.getElementById('work-date').value;
+      if (!date) return;
+      const schedule = getSchedule();
+      schedule.push(date);
+      saveSchedule(schedule);
+      renderSchedule();
+      form.reset();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      if (confirm('Reset your entire schedule?')) {
+        localStorage.removeItem('schedule');
+        renderSchedule();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', renderSchedule);
+
+    function saveChecklistState() {
+  const items = document.querySelectorAll('#checklist input[type="checkbox"]');
+  const state = {};
+  items.forEach(box => state[box.id] = box.checked);
+
+  const data = {
+    date: new Date().toISOString().split('T')[0],
+    state: state
+  };
+  localStorage.setItem('morningChecklist', JSON.stringify(data));
+}
+
+function loadChecklistState() {
+  const saved = JSON.parse(localStorage.getItem('morningChecklist') || '{}');
+  const today = new Date().toISOString().split('T')[0];
+
+  const items = document.querySelectorAll('#checklist input[type="checkbox"]');
+
+  if (!saved.date || saved.date !== today) {
+    items.forEach(box => box.checked = false);
+    saveChecklistState();
+  } else {
+    Object.entries(saved.state).forEach(([id, checked]) => {
+      const box = document.getElementById(id);
+      if (box) box.checked = checked;
+    });
+  }
+
+  items.forEach(box => box.addEventListener('change', saveChecklistState));
+}
+
+document.addEventListener('DOMContentLoaded', loadChecklistState);
+  </script>
+</body>
+</html>
