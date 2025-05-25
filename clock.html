@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sigma Clock</title>
+  <style>
+    body {
+      font-family: 'Arial Black', sans-serif;
+      background: #fcd34d;
+      color: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #1f2937;
+      margin-bottom: 2rem;
+    }
+
+.sigma-clock {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto;
+  border: 6px solid #1f2937;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #e5e7eb 100%);
+  box-shadow: 0 0 25px #00000033 inset;
+}
+
+.sigma-hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+
+.sigma-hour {
+  width: 8px;
+  height: 60px;
+  background: #111827;
+  z-index: 3;
+}
+
+.sigma-minute {
+  width: 6px;
+  height: 80px;
+  background: #2563eb;
+  z-index: 2;
+}
+
+.sigma-second {
+  width: 2px;
+  height: 100px;
+  background: #dc2626;
+  z-index: 1;
+}
+
+.center-core {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #111827;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}
+  </style>
+</head>
+<body>
+<section>
+  <h2>⏳ Time Waits for No One</h2>
+  <div id="clock" class="sigma-clock">
+    <div class="sigma-hand sigma-hour" id="hour-hand"></div>
+    <div class="sigma-hand sigma-minute" id="minute-hand"></div>
+    <div class="sigma-hand sigma-second" id="second-hand"></div>
+    <div class="center-core"></div>
+  </div>
+</section>
+
+<script>
+    function updateSigmaClock() {
+  const now = new Date();
+  const seconds = now.getSeconds();
+  const minutes = now.getMinutes();
+  const hours = now.getHours();
+
+  document.getElementById('second-hand').style.transform = `translateX(-50%) rotate(${seconds * 6}deg)`;
+  document.getElementById('minute-hand').style.transform = `translateX(-50%) rotate(${minutes * 6 + seconds * 0.1}deg)`;
+  document.getElementById('hour-hand').style.transform = `translateX(-50%) rotate(${(hours % 12) * 30 + minutes * 0.5}deg)`;
+}
+
+setInterval(updateSigmaClock, 1000);
+updateSigmaClock();
+</script>
+</body>
+</html>
