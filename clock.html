@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sigma Clock</title>
+  <title>Clock</title>
   <style>
     body {
       font-family: 'Arial Black', sans-serif;
@@ -23,7 +23,7 @@
       margin-bottom: 2rem;
     }
 
-.sigma-clock {
+.clock {
   position: relative;
   width: 240px;
   height: 240px;
@@ -34,7 +34,7 @@
   box-shadow: 0 0 25px #00000033 inset;
 }
 
-.sigma-hand {
+.hand {
   position: absolute;
   bottom: 50%;
   left: 50%;
@@ -43,21 +43,21 @@
   border-radius: 10px;
 }
 
-.sigma-hour {
+.hour {
   width: 8px;
   height: 60px;
   background: #111827;
   z-index: 3;
 }
 
-.sigma-minute {
+.minute {
   width: 6px;
   height: 80px;
   background: #2563eb;
   z-index: 2;
 }
 
-.sigma-second {
+.second {
   width: 2px;
   height: 100px;
   background: #dc2626;
@@ -80,16 +80,16 @@
 <body>
 <section>
   <h2>⏳ Time Waits for No One</h2>
-  <div id="clock" class="sigma-clock">
-    <div class="sigma-hand sigma-hour" id="hour-hand"></div>
-    <div class="sigma-hand sigma-minute" id="minute-hand"></div>
-    <div class="sigma-hand sigma-second" id="second-hand"></div>
+  <div id="clock" class="clock">
+    <div class="hand hour" id="hour-hand"></div>
+    <div class="hand minute" id="minute-hand"></div>
+    <div class="hand second" id="second-hand"></div>
     <div class="center-core"></div>
   </div>
 </section>
 
 <script>
-    function updateSigmaClock() {
+    function updateClock() {
   const now = new Date();
   const seconds = now.getSeconds();
   const minutes = now.getMinutes();
@@ -100,8 +100,8 @@
   document.getElementById('hour-hand').style.transform = `translateX(-50%) rotate(${(hours % 12) * 30 + minutes * 0.5}deg)`;
 }
 
-setInterval(updateSigmaClock, 1000);
-updateSigmaClock();
+setInterval(updateClock, 1000);
+updateClock();
 </script>
 </body>
 </html>
